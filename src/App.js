@@ -29,6 +29,7 @@ function Increment() {
       <div className="calculator p-4">
         <h1 className="text-center text-3xl hidden md:flex justify-center font-bold mb-4">
           I have been developed for use on phones!
+          To experience the ux as intended, please use a phone.
         </h1>
         <p className="text-center mt-4 text-5xl font-bold  text-transparent  bg-clip-text bg-gradient-to-r from-purple-400 to-yellow-600"
 >€{count}</p>
@@ -60,7 +61,7 @@ function Increment() {
 
 function App() {
   return (
-    <div className="App bg-[#090909] h-screen flex justify-center w-screen text-white">
+    <div className="App bg-[#090909] h-screen flex justify-center w-screen  text-white">
       <Increment />
     </div>
   );
