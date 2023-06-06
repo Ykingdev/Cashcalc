@@ -46,7 +46,7 @@ function Increment() {
         <div className="grid w-screen px-10 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
           {incrementValues.map((value, index) => (
             <button
-              className=" hover:bg-gradient-to-r hover:from-purple-400 hover:to-yellow-600 hover:text-[#090909] hover:duration-150 duration-150  bg-[#090909] border-solid border-2 border-[#242424] text-[#969696] p-3 sm:p-4 text-xl rounded-lg"
+              className=" hover:bg-gradient-to-r hover:from-purple-400 hover:to-yellow-600 hover:text-[#090909] hover:duration-150 duration-150 bg-[#090909] border-solid border-2 border-[#242424] text-[#969696] p-3 sm:p-4 text-xl rounded-lg"
               onClick={() => addToCount(value)}
               key={index}
             >
@@ -61,8 +61,11 @@ function Increment() {
 
 function App() {
   return (
-    <div className="App bg-[#090909] h-screen flex justify-center w-screen  text-white">
+    <div className="App bg-[#090909] h-screen flex flex-col justify-center w-screen  text-white">
       <Increment />
+      <footer className="text-center text-[#969696] text-sm mt-5">
+        <p>Developed by <a href="http://ykingdev.com/" className="text-[#969696] hover:text-[#090909]">YKingDev</a></p>
+      </footer> 
     </div>
   );
 }
