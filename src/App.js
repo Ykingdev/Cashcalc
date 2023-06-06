@@ -1,6 +1,16 @@
 import React, { useState } from 'react';
 import './App.css';
 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('/service-worker.js').then(function (registration) {
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }, function (err) {
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
+
 function Increment() {
   const [count, setCount] = useState(0);
   const [clickCounts, setClickCounts] = useState([]);
