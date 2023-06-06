@@ -30,13 +30,14 @@ function Increment() {
         <h1 className="text-center text-3xl hidden md:flex justify-center font-bold mb-4">
           I have been developed for use on phones!
         </h1>
-        <p className="text-center mt-4 text-5xl font-bold">€{count}</p>
+        <p className="text-center mt-4 text-5xl font-bold  text-transparent  bg-clip-text bg-gradient-to-r from-purple-400 to-yellow-600"
+>€{count}</p>
         <div className="flex justify-center overflow-scroll h-[25vh] my-5">
           <ul className="text-left text-sm mx-10 w-[79vw]">
             {uniqueClickCounts.map((amount, index) => (
-              <li className='bg-white p-2 flex justify-between rounded-sm shadow-lg mb-2 text-black' key={index}>
+              <li className='bg-[#090909] text-[#969696] border-solid border-2 border-purple-400   p-3 flex justify-between rounded-md shadow-lg mb-2 font-medium' key={index}>
                 {itemCount(amount)} X €{amount} = €{(amount * itemCount(amount)).toFixed(2)}
-                <button onClick={() => removeItem(index)}>Remove 🗑️</button>
+                <button className='text-red-600 ' onClick={() => removeItem(index)}>Remove</button>
               </li>
             ))}
           </ul>
@@ -44,7 +45,7 @@ function Increment() {
         <div className="grid w-screen px-10 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
           {incrementValues.map((value, index) => (
             <button
-              className="button bg-green-800 p-3 sm:p-4 text-xl rounded-lg"
+              className=" hover:bg-gradient-to-r hover:from-purple-400 hover:to-yellow-600 hover:text-[#090909] hover:duration-150 duration-150  bg-[#090909] border-solid border-2 border-[#242424] text-[#969696] p-3 sm:p-4 text-xl rounded-lg"
               onClick={() => addToCount(value)}
               key={index}
             >
@@ -59,7 +60,7 @@ function Increment() {
 
 function App() {
   return (
-    <div className="App bg-slate-900 h-screen flex justify-center w-screen text-white">
+    <div className="App bg-[#090909] h-screen flex justify-center w-screen text-white">
       <Increment />
     </div>
   );
