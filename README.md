@@ -46,3 +46,7 @@ For deeper insights into the application and React, these sections may be helpfu
 In case you run into issues with `npm run build` failing to minify, visit [this page](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify) for guidance.
 
 Thank you for checking out CashCalc. Happy coding and calculating!
+
+## almost forgot you can test it out here 
+
+### [Cashcalc](https://cashcalc.vercel.app/)
