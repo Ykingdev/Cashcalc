@@ -19,20 +19,25 @@ function Increment() {
   const addToCount = (amount) => {
     const newCount = count + amount;
     setCount(parseFloat(newCount.toFixed(2)));
-    setClickCounts((prevClickCounts) => [...prevClickCounts, amount]);
+    setClickCounts((prevClickCounts) => [...prevClickCounts, { amount, id: new Date().getTime() }]);
   };
 
-  const removeItem = (index) => {
-    const removedAmount = clickCounts[index];
-    setClickCounts((prevClickCounts) =>
-      prevClickCounts.filter((_, i) => i !== index)
-    );
-    const newCount = count - removedAmount;
-    setCount(parseFloat(newCount.toFixed(2)));
+  const removeItem = (amount) => {
+    setClickCounts((prevClickCounts) => {
+      const itemToRemoveIndex = prevClickCounts.findIndex((item) => item.amount === amount);
+      if (itemToRemoveIndex !== -1) {
+        const newCount = count - prevClickCounts[itemToRemoveIndex].amount;
+        setCount(parseFloat(newCount.toFixed(2)));
+        return prevClickCounts.filter((item, index) => index !== itemToRemoveIndex);
+      } else {
+        return prevClickCounts;
+      }
+    });
   };
 
-  const uniqueClickCounts = Array.from(new Set(clickCounts));
-  const itemCount = (amount) => clickCounts.filter((item) => item === amount).length;
+  const itemCount = (amount) => clickCounts.filter((item) => item.amount === amount).length;
+
+  const uniqueAmounts = Array.from(new Set(clickCounts.map((item) => item.amount)));
 
   return (
     <div className="flex justify-center w-screen">
@@ -42,13 +47,13 @@ function Increment() {
           To experience the ux as intended, please use a phone.
         </h1>
         <p className="text-center mt-4 text-5xl font-bold  text-transparent  bg-clip-text bg-gradient-to-r from-purple-400 to-yellow-600"
->€{count}</p>
+        >€{count}</p>
         <div className="flex justify-center overflow-scroll h-[25vh] my-5">
           <ul className="text-left text-sm mx-10 w-[79vw]">
-            {uniqueClickCounts.map((amount, index) => (
+            {uniqueAmounts.map((amount, index) => (
               <li className='bg-[#090909] text-[#969696] border-solid border-2 border-purple-400   p-3 flex justify-between rounded-md shadow-lg mb-2 font-medium' key={index}>
                 {itemCount(amount)} X €{amount} = €{(amount * itemCount(amount)).toFixed(2)}
-                <button className='text-red-600 ' onClick={() => removeItem(index)}>Remove</button>
+                <button className='text-red-600 ' onClick={() => removeItem(amount)}>Remove</button>
               </li>
             ))}
           </ul>
@@ -75,7 +80,7 @@ function App() {
       <Increment />
       <footer className="text-center text-[#969696] text-sm mt-5">
         <p>Developed by <a href="http://ykingdev.com/" className="text-[#969696] hover:text-[#090909]">YKingDev</a></p>
-      </footer> 
+      </footer>
     </div>
   );
 }
