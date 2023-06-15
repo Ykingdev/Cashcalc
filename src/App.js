@@ -13,31 +13,36 @@ if ('serviceWorker' in navigator) {
 
 function Increment() {
   const [count, setCount] = useState(0);
-  const [clickCounts, setClickCounts] = useState([]);
+  const [clickCounts, setClickCounts] = useState(new Map());
   const incrementValues = [0.05, 0.10, 0.20, 0.50, 1, 2, 5, 10, 20, 50];
 
   const addToCount = (amount) => {
     const newCount = count + amount;
     setCount(parseFloat(newCount.toFixed(2)));
-    setClickCounts((prevClickCounts) => [...prevClickCounts, { amount, id: new Date().getTime() }]);
+    setClickCounts((prevClickCounts) => {
+      const newClickCounts = new Map(prevClickCounts);
+      const count = newClickCounts.get(amount) || 0;
+      newClickCounts.set(amount, count + 1);
+      return newClickCounts;
+    });
   };
 
   const removeItem = (amount) => {
     setClickCounts((prevClickCounts) => {
-      const itemToRemoveIndex = prevClickCounts.findIndex((item) => item.amount === amount);
-      if (itemToRemoveIndex !== -1) {
-        const newCount = count - prevClickCounts[itemToRemoveIndex].amount;
-        setCount(parseFloat(newCount.toFixed(2)));
-        return prevClickCounts.filter((item, index) => index !== itemToRemoveIndex);
-      } else {
-        return prevClickCounts;
+      const newClickCounts = new Map(prevClickCounts);
+      let count = newClickCounts.get(amount);
+      if (count !== undefined) {
+        if (count === 1) {
+          newClickCounts.delete(amount);
+        } else {
+          newClickCounts.set(amount, count - 1);
+        }
       }
+      return newClickCounts;
     });
+    const newCount = count - amount;
+    setCount(parseFloat(newCount.toFixed(2)));
   };
-
-  const itemCount = (amount) => clickCounts.filter((item) => item.amount === amount).length;
-
-  const uniqueAmounts = Array.from(new Set(clickCounts.map((item) => item.amount)));
 
   return (
     <div className="flex justify-center w-screen">
@@ -50,12 +55,13 @@ function Increment() {
         >€{count}</p>
         <div className="flex justify-center overflow-scroll h-[25vh] my-5">
           <ul className="text-left text-sm mx-10 w-[79vw]">
-            {uniqueAmounts.map((amount, index) => (
-              <li className='bg-[#090909] text-[#969696] border-solid border-2 border-purple-400   p-3 flex justify-between rounded-md shadow-lg mb-2 font-medium' key={index}>
-                {itemCount(amount)} X €{amount} = €{(amount * itemCount(amount)).toFixed(2)}
+            {Array.from(clickCounts.entries()).map(([amount, count], index) => (
+              <li className='bg-[#090909] text-[#969696] border-solid border-2 border-purple-400 p-3 flex justify-between rounded-md shadow-lg mb-2 font-medium' key={index}>
+                {count} X €{amount} = €{(amount * count).toFixed(2)}
                 <button className='text-red-600 ' onClick={() => removeItem(amount)}>Remove</button>
               </li>
             ))}
+
           </ul>
         </div>
         <div className="grid w-screen px-10 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
