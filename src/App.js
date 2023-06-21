@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { AttentionSeeker, Fade } from "react-awesome-reveal";
 import './App.css';
 
 if ('serviceWorker' in navigator) {
@@ -51,19 +52,25 @@ function Increment() {
           I have been developed for use on phones!
           To experience the ux as intended, please use a phone.
         </h1>
+        <AttentionSeeker effect="pulse">
         <p className="text-center mt-4 text-5xl font-bold  text-transparent  bg-clip-text bg-gradient-to-r from-purple-400 to-yellow-600"
-        >€{count}</p>
+          >€{count}</p>
+          </AttentionSeeker>
+
         <div className="flex justify-center overflow-scroll h-[25vh] my-5">
+          <AttentionSeeker effect="pulse" triggerOnce>
           <ul className="text-left text-sm mx-10 w-[79vw]">
             {Array.from(clickCounts.entries()).map(([amount, count], index) => (
               <li className='bg-[#090909] text-[#969696] border-solid border-2 border-purple-400 p-3 flex justify-between rounded-md shadow-lg mb-2 font-medium' key={index}>
                 {count} X €{amount} = €{(amount * count).toFixed(2)}
                 <button className='text-red-600 ' onClick={() => removeItem(amount)}>Remove</button>
-              </li>
+                </li>
             ))}
 
-          </ul>
+            </ul>
+          </AttentionSeeker>
         </div>
+        <Fade cascade>
         <div className="grid w-screen px-10 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
           {incrementValues.map((value, index) => (
             <button
@@ -74,7 +81,8 @@ function Increment() {
               {value < 1 ? `${value * 100} cent` : `${value} euro`}
             </button>
           ))}
-        </div>
+          </div>
+        </Fade>
       </div>
     </div>
   );
