@@ -4,8 +4,13 @@
 const CACHE_NAME = 'css-cache';
 
 const FILES_TO_CACHE = [
-    './src/App.js',
-    './src/App.css',
+    '../src/App.js',
+    '../src/CounterDisplay.js',
+    '../src/Increment.js',
+    '../src/IncrementButton.js',
+    '../src/ClickCountsDisplay.js',
+    '../src/serviceWorkerRegistration.js',
+    '../src/App.css',
 ];
 
 self.addEventListener('install', (evt) => {
